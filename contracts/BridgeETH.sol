@@ -6,9 +6,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IToken.sol";
 
 contract BridgeETH is Ownable{
+    IToken token;
     uint256 public nonce;
     mapping(uint256 => bool) public processedNonces;
-    IToken token;
 
     enum Step {
         Burn,
