@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IToken.sol";
 
-contract BridgeETH is Ownable{
+contract BridgeETH is Ownable {
     IToken token;
     uint256 public nonce;
     mapping(uint256 => bool) public processedNonces;
@@ -27,8 +27,8 @@ contract BridgeETH is Ownable{
         token = IToken(_token);
     }
 
-    function burn(address to, uint256 amount) external {
-        token.burn(msg.sender, amount);
+    function burn(address to, uint256 amount) public {
+        token.burnToken(msg.sender, amount);
         emit Transfer(
             msg.sender,
             to,
@@ -44,7 +44,7 @@ contract BridgeETH is Ownable{
         address to,
         uint256 amount,
         uint256 otherChainNonce
-    ) external onlyOwner {
+    ) public onlyOwner {
         require(
             processedNonces[otherChainNonce] == false,
             "transfer already processed"

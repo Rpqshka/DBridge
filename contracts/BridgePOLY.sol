@@ -9,7 +9,7 @@ contract BridgePOLY is Ownable{
     IToken token;
     uint256 public nonce;
     mapping(uint256 => bool) public processedNonces;
-
+    
     enum Step {
         Burn,
         Mint
@@ -27,8 +27,8 @@ contract BridgePOLY is Ownable{
         token = IToken(_token);
     }
 
-    function burn(address to, uint256 amount) external {
-        token.burn(msg.sender, amount);
+    function burn(address to, uint256 amount) public {
+        token.burnToken(msg.sender, amount);
         emit Transfer(
             msg.sender,
             to,
@@ -44,7 +44,7 @@ contract BridgePOLY is Ownable{
         address to,
         uint256 amount,
         uint256 otherChainNonce
-    ) external onlyOwner {
+    ) public onlyOwner {
         require(
             processedNonces[otherChainNonce] == false,
             "transfer already processed"
